@@ -27,6 +27,10 @@ WheelDown::
 
 	;ToolTip, ypos: %ypos% mY: %MousescreenY% wY: %wY% %id% %class%
 
+	MouseGetPos, xpos,, id1
+
+	WinGetClass, class, ahk_id %id1%
+
 	If (ypos < 60 and (InStr(class,"Chrome_WidgetWin") or InStr(class,"Progman")))
 	{
 
@@ -42,6 +46,25 @@ WheelDown::
 		Else
 			Send ^{PgDn}
 	}
+	Else If (xpos < 30 )
+	{
+
+
+
+		;if (maximized)
+			;WinActivate ahk_id1 %id1%
+
+		IfWinNotActive ahk_id1 %id1%
+			WinActivate ahk_id1 %id1%
+		If A_ThisHotkey = WheelUp
+
+Gosub, goto1MouseHotkeys
+
+		Else
+
+Gosub, goto2MouseHotkeys
+
+	}
 	Else
 	{
 		If A_ThisHotkey = WheelUp
@@ -50,3 +73,28 @@ WheelDown::
 			Send {WheelDown}
 	}
 	Return
+
+
+goto1MouseHotkeys:
+	
+SendInput {LAlt Down}
+sleep, 1
+SendInput {Tab}
+sleep, 300
+SendInput {Left}
+sleep, 1
+SendInput {LAlt Up}
+
+return
+
+goto2MouseHotkeys:	
+
+SendInput {LAlt Down}
+sleep, 1
+SendInput {Tab}
+sleep, 300
+SendInput {Right}
+sleep, 1
+SendInput {LAlt Up}
+
+return
