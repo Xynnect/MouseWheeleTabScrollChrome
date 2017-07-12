@@ -15,87 +15,78 @@ Menu, Tray, Tip, Mousewheel tab scroll for Chrome (1.0.3)
 
 WheelUp::
 WheelDown::
-	;CoordMode, Mouse, Window
 	MouseGetPos,, ypos, id
-
-	WinGetClass, class, ahk_id %id%
-	;WinGet, maximized, MinMax, %id%
-	;WinGetPos, wX, wY, , , A
-
-	;CoordMode, Mouse, Screen
-	;MouseGetPos,, MousescreenY, id
-
-	;ToolTip, ypos: %ypos% mY: %MousescreenY% wY: %wY% %id% %class%
-
 	MouseGetPos, xpos,, id1
-
+	WinGetClass, class, ahk_id %id%
 	WinGetClass, class, ahk_id %id1%
+
+	WinGet windows, List
+	Loop %windows%
+	{
+		id2 := windows%A_Index%
+		WinGetTitle wt, ahk_id %id2%
+		r .= wt . "`n"
+	}
 
 	If (ypos < 60 and (InStr(class,"Chrome_WidgetWin") or InStr(class,"Progman")))
 	{
 
-
-
-		;if (maximized)
-			;WinActivate ahk_id %id%
-
 		IfWinNotActive ahk_id %id%
-			WinActivate ahk_id %id%
+		WinActivate ahk_id %id%
 		If A_ThisHotkey = WheelUp
 			Send ^{PgUp}
 		Else
 			Send ^{PgDn}
 	}
-	Else If (xpos < 20 )
-	{
-
-
-
-		;if (maximized)
-			;WinActivate ahk_id1 %id1%
-
-		IfWinNotActive ahk_id1 %id1%
-			WinActivate ahk_id1 %id1%
-		If A_ThisHotkey = WheelUp
-
-Gosub, goto1MouseHotkeys
-
-		Else
-
-Gosub, goto2MouseHotkeys
-
-	}
-	Else
+	
+	;and %id1% in r
+	
+	Else If (ypos > 60 and xpos > 20)
 	{
 		If A_ThisHotkey = WheelUp
 			Send {WheelUp}
 		Else
 			Send {WheelDown}
 	}
+	Else
+	{
+		IfWinNotActive ahk_id1 %id1%
+		WinActivate ahk_id1 %id1%
+		If A_ThisHotkey = WheelUp
+			Gosub, goto1MouseHotkeys
+			
+		Else
+			Gosub, goto2MouseHotkeys
+			
+	}
 	Return
-
 
 goto1MouseHotkeys:
    
+Send {WheelUp}
+sleep, 1
 SendInput {LAlt Down}
-sleep, 10
+sleep, 1
 SendInput {Esc}
-sleep, 20
+sleep, 1
 SendInput {LAlt Up}
 
 return
 
 goto2MouseHotkeys: 
 
+Send {WheelDown}
+sleep, 1
 SendInput {LAlt Down}
-sleep, 10
+sleep, 1
 SendInput {LShift Down}
-sleep, 10
+sleep, 1
 SendInput {Esc}
-sleep, 20
+sleep, 1
 SendInput {LShift Up}
-sleep, 10
+sleep, 1
 SendInput {LAlt Up}
+
 
 return
 
