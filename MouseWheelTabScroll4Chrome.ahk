@@ -46,7 +46,7 @@ WheelDown::
 		Else
 			Send ^{PgDn}
 	}
-	Else If (xpos < 30 )
+	Else If (xpos < 20 )
 	{
 
 
@@ -76,25 +76,26 @@ Gosub, goto2MouseHotkeys
 
 
 goto1MouseHotkeys:
-	
+   
 SendInput {LAlt Down}
-sleep, 1
-SendInput {Tab}
-sleep, 300
-SendInput {Left}
-sleep, 1
+sleep, 10
+SendInput {Esc}
+sleep, 20
 SendInput {LAlt Up}
 
 return
 
-goto2MouseHotkeys:	
+goto2MouseHotkeys: 
 
 SendInput {LAlt Down}
-sleep, 1
-SendInput {Tab}
-sleep, 300
-SendInput {Right}
-sleep, 1
+sleep, 10
+SendInput {LShift Down}
+sleep, 10
+SendInput {Esc}
+sleep, 20
+SendInput {LShift Up}
+sleep, 10
 SendInput {LAlt Up}
 
 return
+
